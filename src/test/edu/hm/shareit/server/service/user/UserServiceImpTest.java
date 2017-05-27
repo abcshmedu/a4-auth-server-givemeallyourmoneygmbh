@@ -1,5 +1,6 @@
 package edu.hm.shareit.server.service.user;
 
+import edu.hm.shareit.server.model.Identity;
 import edu.hm.shareit.server.model.User;
 import edu.hm.shareit.server.model.UserCredentials;
 import edu.hm.shareit.server.service.auth.AuthenticationService;
@@ -60,7 +61,7 @@ public class UserServiceImpTest {
     public void getUsers() throws Exception {
 
         String tokenLisa = authenticationService.authorizeUser(userCredentialsLisa);
-        List<User> all = service.getUsers(tokenLisa);
+        List<Identity> all = service.getUsers(tokenLisa);
 
         assertNotNull(all);
 

@@ -1,5 +1,6 @@
 package edu.hm.shareit.server.resources.oauth;
 
+import edu.hm.shareit.server.model.Identity;
 import edu.hm.shareit.server.model.User;
 import edu.hm.shareit.server.service.user.UserServiceImp;
 
@@ -82,7 +83,7 @@ public class UserResource {
         Response response = Response.status(Response.Status.UNAUTHORIZED).build();
 
         try {
-            final List<User> users = serviceImp.getUsers(token);
+            final List<Identity> users = serviceImp.getUsers(token);
             if(users!=null)
                 response = Response.ok(users).build();
 
