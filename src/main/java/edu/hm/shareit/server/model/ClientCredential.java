@@ -10,6 +10,7 @@ package edu.hm.shareit.server.model;
  * System Properties Intel(R) Xeon(R) CPU E5-2660 0 @2.20GHz 2.20GHz,4 Cores 14.0 GB RAM
  */
 
+//not in user atm
 public class ClientCredential {
     private String clientId;
     private String clientSecret;
@@ -20,7 +21,6 @@ public class ClientCredential {
      * @param clientSecret The client secret string.
      */
     public ClientCredential(String clientId, String clientSecret) {
-        super();
         this.clientId = clientId;
         this.clientSecret = clientSecret;
     }

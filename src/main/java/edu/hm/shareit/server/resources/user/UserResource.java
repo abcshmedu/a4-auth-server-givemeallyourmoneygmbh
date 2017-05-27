@@ -1,4 +1,4 @@
-package edu.hm.shareit.server.resources.oauth;
+package edu.hm.shareit.server.resources.user;
 
 import edu.hm.shareit.server.model.Identity;
 import edu.hm.shareit.server.model.User;
