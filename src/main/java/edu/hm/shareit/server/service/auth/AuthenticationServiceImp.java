@@ -1,7 +1,9 @@
-package edu.hm.shareit.server.service;
+package edu.hm.shareit.server.service.auth;
 
+import edu.hm.shareit.server.Data.Data;
 import edu.hm.shareit.server.model.Token;
 import edu.hm.shareit.server.model.User;
+import edu.hm.shareit.server.model.UserCredentials;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -18,30 +20,11 @@ import java.util.*;
  * System Properties Intel(R) Xeon(R) CPU E5-2660 0 @2.20GHz 2.20GHz,4 Cores 14.0 GB RAM
  */
 
-public class AuthenticationServiceImp implements AuthenticationService {
+public class AuthenticationServiceImp  implements AuthenticationService {
 
-    private static long TIME = 90000;
+    private static long TIME = 1000*60*5; //%Minuten
 
-    //private static Map< User, Token> tokens = new HashMap<>();
-
-    //user, tokenlist
-    private static Map<User, List<Token>> tokenlistOfUser = new HashMap<>();
-
-    //userid, user
-    private static Map<String, User> usersByUserID = new HashMap<String, User>(){
-        {
-            put("lisa",new User("lisa","Hallo123"));
-            put("peter",new User("peter","wert1234"));
-
-        }
-    };
-
-    //token, user
-    private static Map<String, User> userByToken = new HashMap<>();
-    //hate noch token leichen .. etc
-
-
-    public AuthenticationServiceImp() {
+     public AuthenticationServiceImp() {
 
     }
 
@@ -49,7 +32,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
         boolean result = false;
 
-        Token item = findToken(token);
+        Token item = Data.findToken(token);
 
         if (item != null) {
             if(item.getToken().equals(token)){
@@ -62,27 +45,6 @@ public class AuthenticationServiceImp implements AuthenticationService {
             }
         }
 
-        /*if(userByToken.containsKey(token)){
-            final User user = userByToken.get(token);
-            if(tokenlistOfUser.containsKey(user)){
-                Token removeToken = null;
-                final List<Token> tokenList = tokenlistOfUser.get(user);
-                for (Token item:tokenList) {
-                    if(item.getToken().equals(token)){
-                        if(item.getExpire() > System.currentTimeMillis()) {
-                            result = true;
-                        }
-                        else {
-                            removeToken = item;
-                        }
-                    }
-                }
-                if(!result){
-                    userByToken.remove(token);
-                    tokenList.remove(removeToken);
-                }
-            }
-        }*/
 
 
         return result;
@@ -90,18 +52,15 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
 
 
-    public String authorizeUser(User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public String authorizeUser(UserCredentials userCredentials) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
 
         //exist user?
-        if(usersByUserID.containsKey(user.getEmail())){
-
-            //password correct?
-            if(user.getPassword().equals(usersByUserID.get(user.getEmail()).getPassword())){
-
-                return createToken(user);
-            }
-
+        if(Data.validateUser(userCredentials)) {
+            User user = Data.getUser(userCredentials);
+            return createToken(user);
         }
+
         return "";
 
     }
@@ -109,24 +68,17 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     private String createToken(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         final long currentTimeMillis = System.currentTimeMillis();
-        Token token = new Token("", currentTimeMillis, user.getEmail(),  currentTimeMillis+ TIME);
+        Token token = new Token("", currentTimeMillis, user.getUserId() ,currentTimeMillis+ TIME);
 
-        String result = getToken(user,token);
-        token.setToken(result);
 
-        if(tokenlistOfUser.containsKey(user)) {
-            List<Token> list = tokenlistOfUser.get(user);
-            list.add(token);
+        String result="";
+        boolean valid = Data.validateUser(user);
+        if(valid){
+            result = getToken(user,token);
+            token.setToken(result);
+
+            Data.addToken(user, token,result );
         }
-        else{
-
-            List<Token> list = new ArrayList<>();
-            list.add(token);
-            tokenlistOfUser.put(user, list);
-        }
-
-        userByToken.put(result,user);
-
 
         return result;
     }
@@ -152,20 +104,21 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     public void removeToken(String token) {
 
-        boolean result = false;
+        Data.removeToken(token);
 
-        Token item = findToken(token);
+/*
+        Token item = UserData.findToken(token);
 
         if(item != null){
             User user =userByToken.get(token);
             userByToken.remove(token);
             final List<Token> tokenList = tokenlistOfUser.get(user);
             tokenList.remove(item);
-        }
+        }*/
 
     }
 
-    private Token findToken(String token){
+    /*private Token findToken(String token){
         if(userByToken.containsKey(token)){
 
             final User user = userByToken.get(token);
@@ -183,6 +136,5 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
         }
        return null;
-
-    }
+    }*/
 }

@@ -12,18 +12,29 @@ package edu.hm.shareit.server.model;
 
 public class User {
 
+
     private String userName;
     private boolean isAdmin;
-    private String email;
     private String password;
+    private String userId;
 
     public User() {
 
     }
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String userId, String username, String password) {
+        this.userName = username;
         this.password = password;
+        this.userId = userId;
+
+    }
+
+    public User(String userId, String username, String password, boolean isAdmin) {
+        this.userName = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.userId = userId;
+
     }
 
     public String getUserName() {
@@ -42,13 +53,7 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return password;
@@ -58,14 +63,21 @@ public class User {
         this.password = password;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {
         return "User{" +
                 "userName='" + userName + '\'' +
                 ", isAdmin=" + isAdmin +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }

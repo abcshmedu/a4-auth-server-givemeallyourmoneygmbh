@@ -1,6 +1,6 @@
-package edu.hm.shareit.server.service;
+package edu.hm.shareit.server.service.auth;
 
-import edu.hm.shareit.server.model.User;
+import edu.hm.shareit.server.model.UserCredentials;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public interface AuthenticationService {
 
     boolean validateToken(String token) throws UnsupportedEncodingException, NoSuchAlgorithmException;
-    String authorizeUser(User user) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    String authorizeUser(UserCredentials user) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     void removeToken(String token);
 
 }

@@ -1,4 +1,4 @@
-package edu.hm.shareit.server.service;
+package edu.hm.shareit.server.service.auth;
 
 import javax.ws.rs.core.Response.Status;
 

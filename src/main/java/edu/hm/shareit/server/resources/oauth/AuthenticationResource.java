@@ -1,7 +1,7 @@
 package edu.hm.shareit.server.resources.oauth;
 
-import edu.hm.shareit.server.model.User;
-import edu.hm.shareit.server.service.AuthenticationServiceImp;
+import edu.hm.shareit.server.model.UserCredentials;
+import edu.hm.shareit.server.service.auth.AuthenticationServiceImp;
 import sun.misc.BASE64Decoder;
 
 import javax.ws.rs.*;
@@ -42,9 +42,7 @@ public class AuthenticationResource {
             String authInfo = authParts[1];
             // Decode the data back to original string
             byte[] bytes = null;
-
             bytes = new BASE64Decoder().decodeBuffer(authInfo);
-
             usernameAndPassword = new String(bytes);
 
 
@@ -54,11 +52,7 @@ public class AuthenticationResource {
             final String username = tokenizer.nextToken();
             final String password = tokenizer.nextToken();
 
-
-                //Check token
-                String token = authservice.authorizeUser(new User(username,password));
-
-
+                String token = authservice.authorizeUser(new UserCredentials(username,password));
 
                 if(token.isEmpty())
                     response = Response.status(Response.Status.UNAUTHORIZED).build();
