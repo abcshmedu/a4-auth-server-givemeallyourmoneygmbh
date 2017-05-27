@@ -1,5 +1,6 @@
 package edu.hm.shareit.server.service.user;
 
+import edu.hm.shareit.server.model.Identity;
 import edu.hm.shareit.server.model.User;
 
 import java.util.List;
@@ -22,6 +23,6 @@ public interface UserService {
 
     User getUser(String token, String userId);
     User updateUser(String token, String userId, User user);
-    List<User> getUsers(String token);
+    List<Identity> getUsers(String token);
 
 }

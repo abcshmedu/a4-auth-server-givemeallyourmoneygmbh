@@ -1,6 +1,7 @@
 package edu.hm.shareit.server.service.user;
 
 import edu.hm.shareit.server.Data.Data;
+import edu.hm.shareit.server.model.Identity;
 import edu.hm.shareit.server.model.User;
 
 import java.util.List;
@@ -45,11 +46,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getUsers(String token) {
+    public List<Identity> getUsers(String token) {
         User userByToken = Data.getUser(token);
 
         if(userByToken.getIsAdmin())
-            return Data.getUsers();
+            return Data.getIdentities();
 
         return null;
     }
