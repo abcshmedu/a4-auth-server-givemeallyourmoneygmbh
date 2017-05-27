@@ -1,5 +1,6 @@
 package edu.hm.shareit.server.Data;
 
+import edu.hm.shareit.server.model.Identity;
 import edu.hm.shareit.server.model.Token;
 import edu.hm.shareit.server.model.User;
 import edu.hm.shareit.server.model.UserCredentials;
@@ -152,6 +153,18 @@ public class Data {
 
     }
 
+    public static List<Identity> getIdentities() {
+        List<Identity> users  = new ArrayList<>();
+
+        final Set<Map.Entry<String, User>> entries = usersByUserID.entrySet();
+
+        for (Map.Entry<String,User> item: entries) {
+            User user = item.getValue();
+            users.add(new Identity(user.getUserName(),user.getIsAdmin(),user.getUserId()));
+        }
+
+        return users;
+    }
     public static List<User> getUsers() {
         List<User> users  = new ArrayList<>();
 
@@ -163,7 +176,6 @@ public class Data {
 
         return users;
     }
-
     public static User getUser(UserCredentials userCredentials) {
         String userId = userIdByName.get(userCredentials.getUserName());
 

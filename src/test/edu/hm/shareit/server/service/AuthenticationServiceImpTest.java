@@ -48,8 +48,7 @@ public class AuthenticationServiceImpTest {
      */
     @Test
     public void testCreateToken() throws Exception {
-        String s = "lisa:Hallo123";
-        String[] value = s.split(":");
+
 //TODO: Test goes here...
 /*
 try {
