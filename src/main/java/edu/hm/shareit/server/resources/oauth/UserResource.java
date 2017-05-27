@@ -36,7 +36,7 @@ public class UserResource {
         try {
             //String token,String userId
             final User user = serviceImp.getUser(token,userid);
-            System.out.println(user);
+
             if(user != null)
                 response = Response.ok(user).build();
         } catch (Exception e) {
