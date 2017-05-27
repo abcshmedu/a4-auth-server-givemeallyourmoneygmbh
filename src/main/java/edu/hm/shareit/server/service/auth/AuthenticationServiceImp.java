@@ -106,35 +106,6 @@ public class AuthenticationServiceImp  implements AuthenticationService {
 
         Data.removeToken(token);
 
-/*
-        Token item = UserData.findToken(token);
-
-        if(item != null){
-            User user =userByToken.get(token);
-            userByToken.remove(token);
-            final List<Token> tokenList = tokenlistOfUser.get(user);
-            tokenList.remove(item);
-        }*/
-
     }
 
-    /*private Token findToken(String token){
-        if(userByToken.containsKey(token)){
-
-            final User user = userByToken.get(token);
-            if(tokenlistOfUser.containsKey(user)){
-                Token removeToken = null;
-                final List<Token> tokenList = tokenlistOfUser.get(user);
-                for (Token item:tokenList) {
-                    if(item.getToken().equals(token)){
-                        return item;
-
-                    }
-                }
-
-            }
-
-        }
-       return null;
-    }*/
 }

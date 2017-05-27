@@ -31,6 +31,9 @@ zum lokalen testen:
 	//validiert den token übergabe im header Authorization
 	http://127.0.0.1:8082/services/oauth2/token
 
+	//token wird entfernt
+	http://127.0.0.1:8082/services/oauth2/logout
+
     //erhalt alle oben gennanten user zurück
 	http://127.0.0.1:8082/services/user/
 
@@ -39,3 +42,12 @@ zum lokalen testen:
 	http://127.0.0.1:8082/services/user/2
 
 
+Heroku:
+
+BaseAdsress: https://gmymauth.herokuapp.com/
+
+	https://gmymauth.herokuapp.com/services/oauth2/authorize
+	https://gmymauth.herokuapp.com/services/oauth2/token
+	https://gmymauth.herokuapp.com/services/oauth2/logout
+	https://gmymauth.herokuapp.com/services/user/
+	https://gmymauth.herokuapp.com/services/user/2

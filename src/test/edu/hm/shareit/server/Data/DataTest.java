@@ -8,7 +8,12 @@ import edu.hm.shareit.server.service.auth.AuthenticationServiceImp;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 /**
  * Organization Hochschule Muenchen FK07
  * Project Software-Architektur, Prof. Dr.-Ing. Axel Bottcher, Praktikum, ShareIt
@@ -29,7 +34,7 @@ public class DataTest {
     public void before() throws Exception {
 
 
-        token = authservice.authorizeUser(new UserCredentials("lisa","Hallo123"));
+        token = authservice.authorizeUser(userCredentialsLisa);
 
         assertNotNull(token);
     }
@@ -50,18 +55,30 @@ public class DataTest {
         final User user = Data.getUser(token);
         assertNotNull(user);
 
-    }
 
-    @Test
-    public void getOtherUser() throws Exception {
-        String tokenPeter = authservice.authorizeUser(userCredentialsPeter);
-        final User lisa = Data.getUser(token);
+        User lisa = Data.getUser(token);
         assertNotNull(lisa);
 
-        final User peter = Data.getUser(userCredentialsPeter);
+        User peter = Data.getUser(userCredentialsPeter);
         assertNotNull(peter);
 
     }
+
+
+    @Test
+    public void removeToken() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String tokenPeter = authservice.authorizeUser(userCredentialsPeter);
+        assertNotNull(tokenPeter);
+
+        Data.removeToken(tokenPeter);
+
+        Token result = Data.findToken(tokenPeter);
+
+        assertNull(result);
+
+
+    }
+
 
 
 }

@@ -1,7 +1,15 @@
 package edu.hm.shareit.server.service;
-import org.junit.Test;
-import org.junit.Before;
+
+import edu.hm.shareit.server.model.UserCredentials;
+import edu.hm.shareit.server.service.auth.AuthenticationService;
+import edu.hm.shareit.server.service.auth.AuthenticationServiceImp;
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * AuthenticationServiceImp Tester.
@@ -11,6 +19,12 @@ import org.junit.After;
  * @version 1.0
  */
 public class AuthenticationServiceImpTest {
+
+
+    UserCredentials userCredentialsLisa = new UserCredentials("lisa","Hallo123");
+    UserCredentials userCredentialsPeter = new UserCredentials("peter","wert1234");
+    AuthenticationService authservice  = new AuthenticationServiceImp();
+
 
     @Before
     public void before() throws Exception {
@@ -27,7 +41,7 @@ public class AuthenticationServiceImpTest {
      */
     @Test
     public void testValidateToken() throws Exception {
-//TODO: Test goes here...
+        //TODO: Test goes here...
     }
 
     /**
@@ -37,7 +51,7 @@ public class AuthenticationServiceImpTest {
      */
     @Test
     public void testAuthorizeUser() throws Exception {
-//TODO: Test goes here...
+        //TODO: Test goes here...
     }
 
 
@@ -49,17 +63,8 @@ public class AuthenticationServiceImpTest {
     @Test
     public void testCreateToken() throws Exception {
 
-//TODO: Test goes here...
-/*
-try {
-   Method method = AuthenticationServiceImp.getClass().getMethod("createToken", User.class);
-   method.setAccessible(true);
-   method.invoke(<Object>, <Parameters>);
-} catch(NoSuchMethodException e) {
-} catch(IllegalAccessException e) {
-} catch(InvocationTargetException e) {
-}
-*/
+        //TODO: Test goes here...
+
     }
 
     /**
@@ -68,18 +73,22 @@ try {
      *
      */
     @Test
-    public void testGetToken() throws Exception {
-//TODO: Test goes here...
-/*
-try {
-   Method method = AuthenticationServiceImp.getClass().getMethod("getToken", User.class, Token.class);
-   method.setAccessible(true);
-   method.invoke(<Object>, <Parameters>);
-} catch(NoSuchMethodException e) {
-} catch(IllegalAccessException e) {
-} catch(InvocationTargetException e) {
-}
-*/
-    }
+    public void testGetToken() throws Exception {}
 
+
+    @Test
+    public void testRemoveToken() throws Exception {
+        String tokenPeter = authservice.authorizeUser(userCredentialsPeter);
+        assertNotNull(tokenPeter);
+
+        boolean validationStatus = authservice.validateToken(tokenPeter);
+        assertTrue(validationStatus);
+        authservice.removeToken(tokenPeter);
+
+        validationStatus= authservice.validateToken(tokenPeter);
+        assertFalse(validationStatus);
+
+
+
+    }
 }
